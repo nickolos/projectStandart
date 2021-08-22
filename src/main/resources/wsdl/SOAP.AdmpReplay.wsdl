@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://gibdd.ru" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://gibdd.ru">
+    <types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://gibdd.ru">
+            <s:element name="GetDataFIO">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" name="pFamily" type="s:string"/>
+                        <s:element minOccurs="0" name="pName" type="s:string"/>
+                        <s:element minOccurs="0" name="pFatherName" type="s:string"/>
+                        <s:element minOccurs="0" name="pBirtdhDate" type="s:string"/>
+                        <s:element minOccurs="0" name="pOGRN" type="s:string"/>
+                        <s:element minOccurs="0" name="pStartDate" type="s:date"/>
+                        <s:element minOccurs="0" name="pINN" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetDataFIOResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element name="GetDataFIOResult" type="s0:Result"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="Result">
+                <s:annotation>
+                    <s:documentation>Данные по запросу повторов</s:documentation>
+                </s:annotation>
+                <s:sequence>
+                    <s:element minOccurs="0" name="Message">
+                        <s:annotation>
+                            <s:documentation>Текст сообщения</s:documentation>
+                        </s:annotation>
+                        <s:simpleType>
+                            <s:restriction base="s:string">
+                                <s:maxLength value="1024"/>
+                            </s:restriction>
+                        </s:simpleType>
+                    </s:element>
+                    <s:element minOccurs="0" name="Items" type="s0:ArrayOfResultItemResultItem">
+                        <s:annotation>
+                            <s:documentation>Список нарушений</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="ResultCount" type="s:long">
+                        <s:annotation>
+                            <s:documentation>Количество найденых</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfResultItemResultItem">
+                <s:sequence>
+                    <s:element maxOccurs="unbounded" minOccurs="0" name="ResultItem" nillable="true" type="s0:ResultItem"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ResultItem">
+                <s:annotation>
+                    <s:documentation>Результат запроса по повторам</s:documentation>
+                </s:annotation>
+                <s:sequence>
+                    <s:element minOccurs="0" name="DocDate" type="s:date">
+                        <s:annotation>
+                            <s:documentation>Дата составления документа</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="BreachDateTime" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Дата и время нарушения</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="UnicNumber" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Уникальный номер</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="DecisionDate" type="s:date">
+                        <s:annotation>
+                            <s:documentation>Дата вынесения постановления</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="KOAPArticle" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Статья КОАП</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="EndDate" type="s:date">
+                        <s:annotation>
+                            <s:documentation>Дата исполнения</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="beginDate" type="s:date">
+                        <s:annotation>
+                            <s:documentation>Дата вступления постановления в законную силу</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="Owner" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Собственник (сокращение)</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="OwnerBirthdate" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Собственник дата рождения</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="DecisionNumber" type="s:string">
+                        <s:annotation>
+                            <s:documentation>Номер постановления</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                    <s:element minOccurs="0" name="PayDate" type="s:date">
+                        <s:annotation>
+                            <s:documentation>Дата оплаты штрафа</s:documentation>
+                        </s:annotation>
+                    </s:element>
+                </s:sequence>
+            </s:complexType>
+        </s:schema>
+    </types>
+    <message name="GetDataFIOSoapIn">
+        <part name="parameters" element="s0:GetDataFIO"/>
+    </message>
+    <message name="GetDataFIOSoapOut">
+        <part name="parameters" element="s0:GetDataFIOResponse"/>
+    </message>
+    <portType name="AdmpReplaySoap">
+        <operation name="GetDataFIO">
+            <input message="s0:GetDataFIOSoapIn"/>
+            <output message="s0:GetDataFIOSoapOut"/>
+        </operation>
+    </portType>
+    <binding name="AdmpReplaySoap" type="s0:AdmpReplaySoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="GetDataFIO">
+            <soap:operation soapAction="http://gibdd.ru/SOAP.AdmpReplay.GetDataFIO" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="AdmpReplay">
+        <port name="AdmpReplaySoap" binding="s0:AdmpReplaySoap">
+            <soap:address location="http://fbd.fism.gibdd.ru/csp/fisadm/SOAP.AdmpReplay.cls"/>
+        </port>
+    </service>
+</definitions>
